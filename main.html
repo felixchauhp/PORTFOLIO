@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Felix's Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6f9fd;            /* nền xanh rất nhạt */
+      --primary:#a7c5eb;       /* pastel blue */
+      --primary-600:#7fb0ea;   /* đậm hơn một bậc */
+      --accent:#e4f0ff;        /* điểm nhấn rất nhạt */
+      --ink:#0f172a;           /* chữ chính */
+      --muted:#5b6b83;         /* chữ phụ */
+      --card-bg: rgba(255,255,255,0.65);
+      --ring: rgba(127,176,234,0.45);
+      --shadow: 0 6px 30px rgba(22, 74, 151, 0.10);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--ink); background:
+        radial-gradient(1200px 800px at 85% -10%, #cfe2ff 0%, transparent 60%),
+        radial-gradient(1000px 700px at -10% 10%, #e6f1ff 0%, transparent 55%),
+        var(--bg);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{width:min(1100px, 92vw); margin-inline:auto}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(8px);
+      background:linear-gradient(to bottom, rgba(255,255,255,.72), rgba(255,255,255,.40));
+      border-bottom:1px solid rgba(127,176,234,.25);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; padding:14px 0;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; }
+    .logo{ width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg, var(--primary), var(--primary-600)); box-shadow:var(--shadow); display:grid; place-items:center; }
+    .logo svg{ width:22px; height:22px; color:white }
+    .brand span{ font-weight:600; letter-spacing:.2px }
+
+    .menu{ display:flex; gap:22px; align-items:center }
+    .menu a{ color:var(--muted); font-weight:500 }
+    .menu a:hover{ color:#0d3b66 }
+
+    /* Mobile nav button */
+    .nav-toggle{ display:none; width:42px; height:42px; border:1px solid rgba(127,176,234,.4); border-radius:12px; background:white }
+
+    @media (max-width:820px){
+      .menu{ display:none }
+      .nav-toggle{ display:inline-grid; place-items:center }
+    }
+
+    /* Hero */
+    .hero{ padding:68px 0 36px; }
+    .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:center }
+    .badge{ display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:#0d3b66; padding:8px 14px; border-radius:40px; border:1px solid rgba(127,176,234,.35) }
+    .title{ font-size:clamp(28px, 4.2vw, 46px); line-height:1.15; margin:14px 0 }
+    .lead{ color:var(--muted); font-size:clamp(15px, 1.4vw, 18px) }
+
+    .cta{ margin-top:24px; display:flex; gap:12px; flex-wrap:wrap }
+    .btn{
+      padding:12px 18px; border-radius:14px; border:1px solid transparent; font-weight:600; cursor:pointer; transition:.25s ease; display:inline-flex; align-items:center; gap:10px
+    }
+    .btn-primary{ background:linear-gradient(135deg, var(--primary), var(--primary-600)); color:white; box-shadow:var(--shadow) }
+    .btn-primary:hover{ filter:saturate(110%) brightness(1.02) }
+    .btn-ghost{ background:white; border-color:rgba(127,176,234,.45); color:#0d3b66 }
+    .btn-ghost:hover{ background:#f3f8ff }
+
+    .hero-card{ background:var(--card-bg); border:1px solid rgba(127,176,234,.35); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px }
+    .hero-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px }
+    .stat{ background:white; border:1px solid rgba(127,176,234,.3); border-radius:16px; padding:14px 12px; text-align:center }
+    .stat b{ display:block; font-size:20px }
+    .stat span{ color:var(--muted); font-size:12px }
+
+    @media (max-width:980px){ .hero-grid{ grid-template-columns:1fr } }
+
+    /* Section: Projects */
+    section{ padding:36px 0 }
+    .section-head{ display:flex; align-items:end; justify-content:space-between; margin-bottom:16px }
+    .section-head h2{ margin:0; font-size:clamp(20px, 2.8vw, 28px) }
+    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+    @media (max-width:1000px){ .grid{ grid-template-columns:repeat(2,1fr) } }
+    @media (max-width:640px){ .grid{ grid-template-columns:1fr } }
+
+    .card{
+      background:var(--card-bg); border:1px solid rgba(127,176,234,.35); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); backdrop-filter: blur(6px);
+      display:flex; flex-direction:column
+    }
+    .thumb{ aspect-ratio: 16/9; background:linear-gradient(120deg, #d9e9ff, #ecf4ff); display:grid; place-items:center }
+    .thumb svg{ width:48px; height:48px; color:#7fb0ea }
+    .card-body{ padding:14px 16px }
+    .card h3{ margin:0 0 8px; font-size:18px }
+    .card p{ margin:0; color:var(--muted); font-size:14px }
+    .tags{ display:flex; flex-wrap:wrap; gap:6px; padding:12px 16px 16px }
+    .tag{ font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid rgba(127,176,234,.45); background:white; color:#0d3b66 }
+
+    /* Section: Skills (pill cloud) */
+    .skills{ display:flex; flex-wrap:wrap; gap:10px }
+    .chip{ padding:10px 14px; background:white; border:1px solid rgba(127,176,234,.35); border-radius:999px; color:#0d3b66; box-shadow:var(--shadow) }
+
+    /* Footer */
+    footer{
+      margin-top:24px; border-top:1px solid rgba(127,176,234,.3); background:linear-gradient(to top, rgba(255,255,255,.75), rgba(255,255,255,.45));
+    }
+    .footer-wrap{ display:flex; align-items:center; gap:16px; padding:18px 0; }
+    .footer-logo{ width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg, var(--primary), var(--primary-600)); display:grid; place-items:center; box-shadow:var(--shadow) }
+    .footer-logo svg{ width:22px; height:22px; color:white }
+    .footer-text{ display:flex; flex-direction:column; gap:2px }
+    .footer-top{ display:flex; align-items:center; gap:10px; flex-wrap:wrap }
+    .footer-top b{ font-size:15px }
+    .footer-top a{ font-size:14px; color:#0d3b66 }
+    .footer-meta{ color:var(--muted); font-size:13px }
+
+    /* Focus & a11y */
+    :focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
+
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b1220; --ink:#e6eefb; --muted:#b6c3d9; --card-bg: rgba(15,23,42,.45); --accent:#0f274a }
+      header, footer{ background:linear-gradient(to bottom, rgba(13,27,49,.65), rgba(13,27,49,.35)) }
+      .btn-ghost{ background:transparent }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#" aria-label="Go to homepage">
+        <span class="logo" aria-hidden="true">
+          <!-- simple inline logo mark -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+            <path d="M12 8.5l8-1" opacity=".35"/>
+            <path d="M12 8.5l-8-1" opacity=".35"/>
+          </svg>
+        </span>
+        <span>MyPortfolio</span>
+      </a>
+
+      <nav class="menu" aria-label="Primary">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Open menu" onclick="document.querySelector('.menu').style.display = document.querySelector('.menu').style.display==='flex' ? 'none' : 'flex'">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Xin chào! Tôi là <b>YOUR NAME</b> · Data/Software</span>
+        <h1 class="title">Xây dựng trải nghiệm dữ liệu & phần mềm gọn nhẹ, <span style="color:#0d3b66">hiện đại</span>.</h1>
+        <p class="lead">Tôi tập trung vào Data Engineering, phân tích và các hệ thống web hiệu quả. Dưới đây là một vài dự án nổi bật và kỹ năng chính của tôi.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#projects">
+            <!-- icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            Xem dự án
+          </a>
+          <a class="btn btn-ghost" href="#contact">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10v6a2 2 0 0 1-2 2H7l-4 4V6a2 2 0 0 1 2-2h7"/><path d="M15 3h6v6"/><path d="M10 14l11-11"/></svg>
+            Liên hệ tôi
+          </a>
+        </div>
+      </div>
+      <div class="hero-card" role="img" aria-label="Profile preview">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1640&auto=format&fit=crop" alt="Profile work scene" style="width:100%; border-radius:14px">
+        <div class="hero-stats">
+          <div class="stat"><b>12+</b><span>Projects</span></div>
+          <div class="stat"><b>5</b><span>Tech Stacks</span></div>
+          <div class="stat"><b>3</b><span>Certs</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-head">
+        <h2>Dự án nổi bật</h2>
+        <a class="btn btn-ghost" href="#">Tất cả dự án</a>
+      </div>
+
+      <div class="grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="3"/><path d="M3 12l4-3 4 2 4-4 4 3"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Credit Scoring Mini Platform</h3>
+            <p>MVP đánh giá rủi ro khoản vay với LightGBM, pipeline ETL đơn giản và dashboard.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">LightGBM</span>
+            <span class="tag">FastAPI</span>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a18 18 0 0 1 0 18"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Personal Analytics</h3>
+            <p>Phân tích social media cá nhân, báo cáo tuần tự động và biểu đồ tương tác.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">SQL</span>
+            <span class="tag">Airflow</span>
+            <span class="tag">Power BI</span>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15V6a2 2 0 0 0-2-2H9l-6 6v5a2 2 0 0 0 2 2h6"/><path d="M3 10h6V4"/><path d="M16 22l5-5"/><path d="M21 21.5V17h-4.5"/></svg>
+          </div>
+          <div class="card-body">
+            <h3>Inventory App (Desktop)</h3>
+            <p>Ứng dụng quản lý kho Java Swing; refactor DAO, bổ sung kiểm thử & bảo mật.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">Java</span>
+            <span class="tag">DAO</span>
+            <span class="tag">JUnit</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-head">
+        <h2>Kỹ năng chính</h2>
+      </div>
+      <div class="skills">
+        <span class="chip">Python</span>
+        <span class="chip">SQL</span>
+        <span class="chip">AWS (S3, Glue, Lambda)</span>
+        <span class="chip">Airflow</span>
+        <span class="chip">Power BI</span>
+        <span class="chip">Snowflake</span>
+        <span class="chip">Scikit‑learn</span>
+        <span class="chip">LightGBM</span>
+        <span class="chip">HTML/CSS/JS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / About CTA -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head">
+        <h2>Liên hệ</h2>
+      </div>
+      <div class="card" style="padding:18px">
+        <p style="margin:0; color:var(--muted)">Bạn có cơ hội hợp tác thú vị? Tôi sẵn sàng tham gia các dự án về dữ liệu, web và phân tích.</p>
+        <div class="cta" style="margin-top:14px">
+          <a class="btn btn-primary" href="mailto:your.email@example.com">Gửi email</a>
+          <a class="btn btn-ghost" href="#about">Xem thêm về tôi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head">
+        <h2>Về tôi</h2>
+      </div>
+      <div class="card" style="padding:18px">
+        <p style="margin:0">Tôi là sinh viên Khoa học Máy tính, hướng Data Engineering & Analytics. Tôi yêu thích việc biến dữ liệu thành quyết định hữu ích, đồng thời chú trọng vào trải nghiệm người dùng tinh gọn, hiện đại.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-wrap">
+      <!-- Footer logo on the left -->
+      <div class="footer-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+        </svg>
+      </div>
+      <!-- Personal info to the right of the logo -->
+      <div class="footer-text">
+        <div class="footer-top">
+          <b>YOUR NAME</b>
+          <a href="mailto:your.email@example.com">your.email@example.com</a>
+          <a href="tel:+84000000000">+84 00 000 000</a>
+          <span class="footer-meta">HCMC · Viet Nam</span>
+        </div>
+        <div class="footer-meta">© <span id="y"></span> · Open to work • LinkedIn / GitHub / CV</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
