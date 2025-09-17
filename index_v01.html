@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Felix Chau HP · Portfolio</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Core per request */
+      --bg:#D9F9FF;             /* exact background color provided */
+      --ink:#014955;            /* text */
+      --muted:#3c6173;          /* secondary text */
+      --link:#05C8E8;           /* links */
+      --button:#19A1B9;         /* button */
+      --primary:#D9F9FF;        /* pastel base */
+      --accent:#9bdaf0;         /* accent stroke */
+      --card:rgba(255,255,255,.8);
+      --ring:rgba(5,200,232,.45);
+      --shadow: 0 8px 32px rgba(3, 63, 99, .08);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; color:var(--ink); background: var(--bg)}
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%; display:block}
+    .container{width:min(1120px,92vw); margin-inline:auto}
+
+    /* Header: center logo, 3 items left + 3 items right */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(160%) blur(8px);
+      background:linear-gradient(to bottom, rgba(255,255,255,.9), rgba(255,255,255,.6)); border-bottom:1px solid rgba(155,218,240,.45)}
+    .nav{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; padding:12px 0}
+    .menu{display:flex; gap:18px; align-items:center; justify-content:flex-start}
+    .menu.right{justify-content:flex-end}
+    .menu a{font-weight:600; font-size:14px; padding:8px 10px; border-radius:10px}
+    .menu a:hover{background:rgba(255,255,255,.6); box-shadow:var(--shadow); color:var(--ink)}
+    .brand{display:grid; place-items:center}
+    .logo{ width:42px; height:42px; border-radius:12px; display:grid; place-items:center; box-shadow:var(--shadow);
+      background: radial-gradient(120% 120% at 30% 20%, #fff 0%, var(--primary) 60%, var(--accent) 100%)}
+    .logo svg{ width:24px; height:24px; color:#0d3b66 }
+
+    /* Sections */
+    section{ padding:38px 0 }
+    .section-head{ display:flex; align-items:end; justify-content:space-between; margin-bottom:16px; color: #014955 }
+    h1{ font-size:clamp(34px,5.2vw,60px); line-height:1.1; margin:10px 0 }
+    h2{ font-size:clamp(20px,3vw,28px); margin:0 0 8px }
+    p.lead{ color:var(--muted); font-size:clamp(14px,1.1vw,16px) }
+
+    /* Hero (Home) */
+    .hero{ padding:70px 0 36px }
+    .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center }
+    @media (max-width:980px){ .hero-grid{ grid-template-columns:1fr } }
+    .badge{ display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,.7); padding:8px 14px; border-radius:999px; border:1px solid rgba(155,218,240,.45); color:#0d3b66 }
+    .card{ background:var(--card); border:1px solid rgba(155,218,240,.45); border-radius:var(--radius); box-shadow:var(--shadow) }
+    .card.pad{ padding:18px }
+
+    /* Name & nickname */
+    .name{ font-size:clamp(42px,6vw,72px); font-weight:700; margin:0; color: #014955 }
+    .nickname{ margin-top:6px; color:#0d3b66; font-weight:600 }
+    .objective{ margin-top:8px; color:var(--muted); font-size:14px; color: #014955  }
+
+    /* Carousel (personal photos) */
+    .carousel{ position:relative; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(155,218,240,.45) }
+    .slides{ display:flex; transition: transform .5s ease-in-out }
+    .slide{ min-width:100%; aspect-ratio: 16/10; background:#eaf8ff; display:grid; place-items:center; object-fit:cover }
+    .ctrl{ position:absolute; top:50%; transform:translateY(-50%); background:white; border:1px solid rgba(155,218,240,.6); border-radius:10px; width:40px; height:40px; display:grid; place-items:center; cursor:pointer }
+    .ctrl:hover{ background:#f2fbff }
+    .prev{ left:10px } .next{ right:10px }
+    .dots{ display:flex; gap:8px; justify-content:center; margin-top:10px }
+    .dot{ width:8px; height:8px; border-radius:50%; background:#cfefff; }
+    .dot.active{ background:#7cc7e5 }
+
+    /* Grids */
+    .grid{ display:grid; gap:18px }
+    .grid.cards-3{ grid-template-columns:repeat(3,1fr) }
+    @media (max-width:1000px){ .grid.cards-3{ grid-template-columns:repeat(2,1fr) } }
+    @media (max-width:640px){ .grid.cards-3{ grid-template-columns:1fr } }
+
+    .item{ padding:16px }
+    .muted{ color:var(--muted) }
+    .pill{ display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(155,218,240,.5); background:white; color:#014955; font-size:12px; margin:4px 6px 0 0 }
+
+    /* Timeline (Resume) */
+    .timeline{ display:grid; grid-template-columns: 120px 1fr; gap:20px }
+    .rail{ position:relative; }
+    .rail::before{ content:""; position:absolute; left:calc(50% - 2px); top:0; bottom:0; width:4px; background:linear-gradient(#9bdaf0, #fff); border-radius:4px }
+    .year{ position:sticky; top:84px; display:flex; justify-content:center; align-items:flex-start }
+    .year b{ background:white; border:1px solid rgba(155,218,240,.65); padding:8px 12px; border-radius:10px; color:#0d3b66; box-shadow:var(--shadow) }
+    .entries{ display:flex; flex-direction:column; gap:14px }
+    .entry{ display:grid; grid-template-columns: 1fr; gap:8px; background:var(--card); border:1px solid rgba(155,218,240,.45); border-radius:16px; padding:14px; box-shadow:var(--shadow) }
+    .entry h3{ margin:0 0 4px }
+    .entry small{ color:var(--muted) }
+
+    /* Project fixed sizing */
+    .project{ position:relative; display:flex; flex-direction:column; height:340px }
+    .project-thumb{ height:170px; overflow:hidden }
+    .project-thumb img{ width:100%; height:100%; object-fit:cover }
+    .project-body{ flex:1; padding:14px 16px; position:relative }
+    .project .more{ position:absolute; right:16px; bottom:12px; font-weight:700; color:var(--link); border:none; background:transparent; padding:0; }
+    .project .more:hover{ text-decoration:underline }
+
+    /* Certificates as chips like skills */
+    .cert-list{ display:flex; flex-wrap:wrap; gap:10px }
+    .cert{ padding:10px 14px; background:white; border:1px solid rgba(155,218,240,.45); border-radius:999px; color:var(--ink); box-shadow:var(--shadow) }
+    /* Contact section styles */
+    .contact-content{ display:flex; justify-content:center; align-items:center; min-height:120px }
+    .contact-info{ text-align:center; max-width:1000px }
+    /* Footer */
+    footer{ border-top:1px solid rgba(155,218,240,.45); background:linear-gradient(to top, rgba(255,255,255,.9), rgba(255,255,255,.6)); }
+    .footer-wrap{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:18px 0; color:#014955 }
+    .footer-logo{ width:44px; height:44px; border-radius:12px; background: radial-gradient(120% 120% at 30% 20%, #fff 0%, var(--primary) 60%, var(--accent) 100%); display:grid; place-items:center; box-shadow:var(--shadow) }
+    .footer-logo svg{ width:24px; height:24px; color:#0d3b66 }
+
+    /* Buttons */
+    .btn{ border:1px solid rgba(25,161,185,.6); border-radius:12px; padding:8px 12px; background:var(--button); color:white; font-weight:700; cursor:pointer }
+    .btn:hover{ filter:brightness(1.05) }
+
+    /* Back to top floating button */
+    .fab-top{ position:fixed; right:18px; bottom:18px; display:none; z-index:60 }
+    .fab-top.show{ display:inline-flex }
+
+    :focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
+    html{ scroll-behavior:smooth }
+    @media (prefers-color-scheme: dark){
+      :root{ --ink:#e6eefb; --muted:#b6c3d9; --card:rgba(13,27,49,.55) }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header: 3 items left · centered logo · 3 items right -->
+  <header>
+    <div class="container nav">
+      <nav class="menu left" aria-label="Primary left">
+        <a href="#resume">Resume</a>
+        <a href="#cover">Cover Letter</a>
+        <a href="#projects">Project</a>
+      </nav>
+      <a href="#home" class="brand" aria-label="Go to home">
+        <span class="logo" aria-hidden="true">
+            <img src="assets/logo.png" alt="felixchauhp.io.vn">
+        </span>
+      </a>
+      <nav class="menu right" aria-label="Primary right">
+        <a href="#skills">Skills</a>
+        <a href="#certificates">Certificates</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="name">PHUC NGUYEN CHAU HOAI</h1>
+        <div class= "badge">(Felix)</div>
+        <p class="objective">Proficient in Python & SQL with hands‑on experience in e‑commerce operations, data analytics, and digital content management. Contributed to QA for an aviation data system (AWS, Airflow, Lambda, Snowflake). Seeking opportunities to apply and expand expertise in big data and database development.</p>
+      </div>
+      <div>
+        <!-- Personal slideshow -->
+        <div class="carousel" aria-label="Personal photo slider">
+          <div class="slides" id="slides">
+            <!-- Replace src with your images -->
+            <img class="slide" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1640&auto=format&fit=crop" alt="Work scene"/>
+            <img class="slide" src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?q=80&w=1640&auto=format&fit=crop" alt="Study & teamwork"/>
+            <img class="slide" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1640&auto=format&fit=crop" alt="Presentation"/>
+          </div>
+          <button class="ctrl prev" id="prev" aria-label="Previous slide">‹</button>
+          <button class="ctrl next" id="next" aria-label="Next slide">›</button>
+        </div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cover Letter (now above Resume) -->
+  <section id="cover">
+    <div class="container">
+      <div class="section-head"><h2>Cover Letter</h2></div>
+      <div class="card pad">
+        <p>Dear Hiring Manager,</p>
+        <p>My name is Phuc - Nguyen Chau Hoai. I am writing to express my keen interest in the Intern position at your company. As a final-year Computer Science student specializing in Data, Security Engineering, and Business Intelligence Data Engineering at HCMC University of Technology – HCMC Vietnam National University (HCMUT), I am eager to apply my knowledge and skills in a dynamic and innovative environment.</p>
+        <p>With a solid foundation in Python, SQL, data analytics, and programming, I am capable of generating data-driven insights to support strategic decision-making. My hands-on experience in e-commerce operations and digital copyright management has equipped me with a comprehensive understanding of digital platforms and content monetization. In addition, my proficiency in Microsoft Office tools and my analytical mindset allow me to process and visualize complex data effectively.</p>
+        <p>Throughout my academic journey, I have participated in projects that involved business analytics, data mining, and reporting, closely aligned with the expectations of a business intelligence role. Collaborating with cross-functional teams has strengthened my problem-solving and adaptability in fast-paced settings. Furthermore, my involvement in university-level marketing and media campaigns has refined my ability to plan and execute digital strategies efficiently.</p>
+        <p>I am highly motivated to contribute to your organization’s success by supporting business growth initiatives, improving operational processes, and delivering actionable insights through data analysis. I would welcome the opportunity to further discuss how my background aligns with your team’s goals. Thank you for your time and consideration.</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- Resume (Education + Experience) with left year rail; start years shown) -->
+  <section id="resume">
+    <div class="container">
+      <div class="section-head"><h2>Resume</h2></div>
+
+      <!-- Education -->
+      <div class="card pad" style="margin-bottom:16px">
+        <h3>Education</h3>
+        <div class="timeline" style="margin-top:10px">
+          <div class="rail"><div class="year"><b>2022</b></div></div>
+          <div class="entries">
+            <div class="entry">
+              <h3>Ho Chi Minh City University of Technology – Vietnam National University Ho Chi Minh city</h3>
+              <small>Oct 2022 – Nov 2026 (expected)</small>
+                <ul>
+                    <li>Bachelor of Computer Science, specializing in Data Engineering and Business Intelligence</li>
+                    <li>GPA: 3.1/4.0</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        <div class="timeline" style="margin-top:10px">
+          <div class="rail"><div class="year"><b>2024</b></div></div>
+          <div class="entries">
+            <div class="entry">
+              <h3>Ho Chi Minh City University of Technology – Vietnam National University Ho Chi Minh city</h3>
+              <small>Jun 2024 – 2027 (expected)</small>
+              <ul>
+                  <li>Integrated Master’s Program in Computer Science</li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+                  <div class="card pad" style="margin-bottom:16px">
+                <h3>Experience</h3>
+                
+                <!-- FPT Software - 2025 -->
+                <div class="timeline" style="margin-top:10px">
+                    <div class="rail"><div class="year"><b>2025</b></div></div>
+                    <div class="entries">
+                        <div class="entry">
+                            <h3>FPT Software · Data Quality Assurance Intern</h3>
+                            <small>May 2025 – Sep 2025 · Ho Chi Minh City</small>
+                            <ul>
+                                <li>Performed data structure, system, and non-functional testing for an aviation data processing platform on AWS.</li>
+                                <li>Validated large datasets and performed consistency checks across AWS Glue, S3, DynamoDB, and Snowflake.</li>
+                                <li>Verified pipelines orchestrated by Apache Airflow and triggered by AWS Lambda.</li>
+                                <li>Reportedandtracked defects using Jira for issue management; collaborated with developers to resolve problems efficiently.</li>
+                                <li>Applied SDLC principles and Agile workflows in cloud-based QA practices</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Umami Logistics - 2024 -->
+                <div class="timeline" style="margin-top:10px">
+                    <div class="rail"><div class="year"><b>2024</b></div></div>
+                    <div class="entries">
+                        <div class="entry">
+                            <h3>Umami Logistics Technology · Social Media Specialist</h3>
+                            <small>Jul 2024 – Apr 2025 · Ho Chi Minh City</small>
+                            <ul>
+                                <li>Managed content for a media page with 85K+ followers on Facebook, 20K+ on TikTok, and over 20M monthly views, specializing in Thailand showbiz and movie promotions in Vietnam.</li>
+                                <li>Collaborated with Thailand movie distributors such as Galaxy Studio, Lotte Entertainment, CJ E&M Vietnam, TodayTV Channel and advertising agencies to promote TV series and movies in Vietnam.</li>
+                                <li>Participated in YouTube Content Verification Program (CVP) for copyright protection.</li>
+                                <li>Managed data archiving and supported SEO optimization for the website.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teaching Assistant - 2023 -->
+                <div class="timeline" style="margin-top:10px">
+                    <div class="rail"><div class="year"><b>2023</b></div></div>
+                    <div class="entries">
+                        <div class="entry">
+                            <h3>Technology Business Incubation Center (HCMUT-TBI) · Teaching Assistant</h3>
+                            <small>Jul 2023 – Aug 2023</small>
+                            <ul>
+                                <li>Supported students through individual assignments and group projects, submissions, and class attendance management.</li>
+                                <li>Assisted lecturers in preparing teaching equipment and ensuring smooth delivery of course sessions</li>
+                                <li>Contributed to course operations by documenting activities (photography) and supporting reporting requirements for the center.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brand Management - 2022 -->
+                <div class="timeline" style="margin-top:10px">
+                    <div class="rail"><div class="year"><b>2022</b></div></div>
+                    <div class="entries">
+                        <div class="entry">
+                            <h3>Brand Management & Communication Office, HCMUT · Collaborator</h3>
+                            <small>Oct 2022 – Jul 2023</small>
+                            <ul>
+                                <li>Assisted in organizing major university events: Graduation Ceremonies, 65th Anniversary of HCMUT, BK Innovation 2023.</li>
+                                <li>Provided admissions consulting for high school students in Ho Chi Minh City</li>
+                                <li>Managed BKHCM- Tư vấn tuyển sinh Bách khoa Facebook page</li>
+                                <li>Produced and edited videos for Bách khoa đồng hành cùng mùa thi 2023 short-video campaign.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </section>
+
+  <!-- Academic & Personal Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-head"><h2>Academic & Personal Projects</h2></div>
+      <div class="grid cards-3">
+        <article class="card item project">
+          <div class="project-thumb"><img src="https://images.unsplash.com/photo-1551281044-8d8a1ae5d1af?q=80&w=1480&auto=format&fit=crop" alt="E-commerce Website"></div>
+          <div class="project-body">
+            <h3>E‑commerce Website for Motorcycle Accessories</h3>
+            <p>Shopping platform (HTML/CSS/JS/PHP/MySQL) with cart & order system.</p>
+            <a class="more" href="https://github.com/felixchauhp/Motorcycle-Accessories-Website" target="_blank" rel="noopener">Xem thêm →</a>
+          </div>
+        </article>
+        <article class="card item project">
+          <div class="project-thumb"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1480&auto=format&fit=crop" alt="REC News"></div>
+          <div class="project-body">
+            <h3>REC News (Ngôi nhà REC) Website</h3>
+            <p>Responsive content hub (HTML/CSS/JS), tối ưu mobile & desktop.</p>
+            <a class="more" href="https://recnews.felixchauhp.io.vn" target="_blank" rel="noopener">Xem thêm →</a>
+          </div>
+        </article>
+        <article class="card item project">
+          <div class="project-thumb"><img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1480&auto=format&fit=crop" alt="Customer Segmentation"></div>
+          <div class="project-body">
+            <h3>E‑commerce Customer Segmentation</h3>
+            <p>RFM & K‑Means clustering; trực quan bằng Power BI.</p>
+            <a class="more" href="https://github.com/felixchauhp/Customer-Segmentation" target="_blank" rel="noopener">Xem thêm →</a>
+          </div>
+        </article>
+        <article class="card item project">
+          <div class="project-thumb"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1480&auto=format&fit=crop" alt="Recipe Recommendation"></div>
+          <div class="project-body">
+            <h3>Recipe Recommendation Model</h3>
+            <p>Content‑based recommender bằng Python.</p>
+            <a class="more" href="https://github.com/felixchauhp/RecipeRecommendation" target="_blank" rel="noopener">Xem thêm →</a>
+          </div>
+        </article>
+        <article class="card item project">
+          <div class="project-thumb"><img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1480&auto=format&fit=crop" alt="Hospital Management System"></div>
+          <div class="project-body">
+            <h3>Hospital Management System</h3>
+            <p>Thiết kế CSDL quan hệ (MS SQL Server) & UI web responsive.</p>
+            <a class="more" href="https://github.com/felixchauhp/thuducareahospital" target="_blank" rel="noopener">Xem thêm →</a>
+          </div>
+        </article>
+        <article class="card item project">
+          <div class="project-thumb"><img src="https://images.unsplash.com/photo-1518773553398-650c184e0bb3?q=80&w=1480&auto=format&fit=crop" alt="YOLOv12 Object Detection"></div>
+          <div class="project-body">
+            <h3>Object Detection & Counting with YOLOv12</h3>
+            <p>Realtime detection, custom datasets (Roboflow, Colab).</p>
+            <a class="more" href="https://github.com/tphi12/DA_HTTT" target="_blank" rel="noopener">Xem thêm →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-head"><h2>Skills</h2></div>
+      <div class="card pad">
+        <p><strong>Languages:</strong> Python, SQL, PHP, JavaScript, C++, HTML/CSS</p>
+        <p><strong>Tools:</strong> Power BI, Figma, Jira, Microsoft Excel, Google Workspace, Adobe Premiere</p>
+        <p><strong>Cloud & Data:</strong> AWS (Glue, S3, DynamoDB, Lambda), Snowflake</p>
+        <p><strong>Soft:</strong> Analytical & Critical Thinking · Communication & Collaboration · Time Management</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates as chips like Skills -->
+  <section id="certificates">
+    <div class="container">
+      <div class="section-head"><h2>Certificates</h2></div>
+      <div class="cert-list">
+        <span style="color:#014955" class="cert">IELTS 6.5</span>
+        <span style="color:#014955" class="cert">MOS: Excel Associate (2019)</span>
+        <span style="color:#014955" class="cert">Google — Foundations of BI</span>
+        <span style="color:#014955" class="cert">Google — Foundations of Project Management</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact (centered layout like skills section) -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-head"><h2>Contact</h2></div>
+            <div class="card pad">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div style="margin-bottom:12px">
+                            <b style="font-size:18px">PHUC NGUYEN CHAU HOAI (Felix)</b>
+                        </div>
+                        <div style="margin:8px 0">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d3b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <a href="mailto:felixchauhp@gmail.com">felixchauhp@gmail.com</a>
+                            <span style="margin:0 8px">•</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d3b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.1 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.14a2 2 0 0 1 2.11-.45c.8.27 1.64.45 2.5.57A2 2 0 0 1 22 16.92z"/></svg>
+                            <a href="tel:+84838620204">+84 838 620 204</a>
+                            <span style="margin:0 8px">•</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d3b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>01 St., Thu Duc Ward, Ho Chi Minh City, Viet Nam</span>
+                        </div>
+                        <div style="margin:8px 0; color:#014955">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d3b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/></svg>
+                            <a href="https://felixchauhp.io.vn" target="_blank" rel="noopener">felixchauhp.io.vn</a>
+                            <span style="margin:0 8px">•</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d3b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 22.027V18a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v4"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg>
+                            <a href="https://github.com/felixchauhp" target="_blank" rel="noopener">GitHub</a>
+                            <span style="margin:0 8px">•</span>
+                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0d3b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 22v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-4"/><path d="M20 9v4"/></svg>
+                            <a href="https://www.linkedin.com/in/felixchauhp" target="_blank" rel="noopener">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-wrap">
+      <div class="footer-logo" aria-hidden="true">
+        <img src="assets/logo.png" alt="felixchauhp.io.vn">
+      </div>
+      <div>© 2025 <a href="https://felixchauhp.io.vn" target="_blank" rel="noopener">felixchauhp.io.vn</a></div>
+    </div>
+  </footer>
+
+  <!-- Floating Back-to-Top button -->
+  <div class="fab-top" id="fabTop"><a href="#home" class="btn">Top ↑</a></div>
+
+  <script>
+    // simple carousel logic
+    const slides = document.querySelector('#slides');
+    const items = Array.from(document.querySelectorAll('.slide'));
+    const dotsC = document.getElementById('dots');
+    let idx = 0;
+
+    function renderDots(){
+      dotsC.innerHTML = '';
+      items.forEach((_, i)=>{
+        const d = document.createElement('span'); d.className = 'dot' + (i===idx?' active':'');
+        d.addEventListener('click', ()=>{ idx=i; update(); });
+        dotsC.appendChild(d);
+      });
+    }
+    function update(){ slides.style.transform = `translateX(-${idx*100}%)`; renderDots(); }
+    document.getElementById('prev').addEventListener('click', ()=>{ idx = (idx-1+items.length)%items.length; update(); });
+    document.getElementById('next').addEventListener('click', ()=>{ idx = (idx+1)%items.length; update(); });
+    renderDots();
+
+    // show floating back-to-top on scroll
+    const fab = document.getElementById('fabTop');
+    const onScroll = () => { if (window.scrollY > 180) fab.classList.add('show'); else fab.classList.remove('show'); };
+    document.addEventListener('scroll', onScroll, { passive: true });
+  </script>
+</body>
+</html>
