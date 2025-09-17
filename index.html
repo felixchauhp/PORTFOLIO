@@ -342,29 +342,71 @@
   <script>
     // ====== CAROUSEL ======
     const slides = document.querySelector('#slides');
-    const items = Array.from(document.querySelectorAll('.slide'));
-    const dotsC = document.getElementById('dots');
+    const items  = Array.from(document.querySelectorAll('.slide'));
+    const prevBt = document.getElementById('prev');
+    const nextBt = document.getElementById('next');
+    const carousel = prevBt?.closest('.carousel');
+
     let idx = 0;
-    function renderDots(){
-      dotsC.innerHTML = '';
-      items.forEach((_, i)=>{
-        const d = document.createElement('button');
-        d.className = 'dot' + (i===idx?' active':'');
-        d.setAttribute('aria-label', `Go to slide ${i+1}`);
-        d.style.border='none'; d.style.cursor='pointer';
-        d.addEventListener('click', ()=>{ idx=i; update(); });
-        dotsC.appendChild(d);
-      });
+
+    function update(){
+      slides.style.transform = `translateX(-${idx*100}%)`;
     }
-    function update(){ slides.style.transform = `translateX(-${idx*100}%)`; renderDots(); }
-    document.getElementById('prev').addEventListener('click', ()=>{ idx = (idx-1+items.length)%items.length; update(); });
-    document.getElementById('next').addEventListener('click', ()=>{ idx = (idx+1)%items.length; update(); });
-    // keyboard support
-    document.addEventListener('keydown', (e)=>{
-      if(e.key==='ArrowLeft') { idx = (idx-1+items.length)%items.length; update(); }
-      if(e.key==='ArrowRight'){ idx = (idx+1)%items.length; update(); }
+
+    // --- điều khiển thủ công ---
+    prevBt.addEventListener('click', ()=>{
+      idx = (idx-1+items.length)%items.length;
+      update();
+      restartAuto();
     });
-    renderDots();
+    nextBt.addEventListener('click', ()=>{
+      idx = (idx+1)%items.length;
+      update();
+      restartAuto();
+    });
+
+    // --- hỗ trợ phím ---
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowLeft')  { idx = (idx-1+items.length)%items.length; update(); restartAuto(); }
+      if(e.key==='ArrowRight') { idx = (idx+1)%items.length; update(); restartAuto(); }
+    });
+
+    // --- AUTOPLAY ---
+    const AUTOPLAY_MS = 3500; // chỉnh tốc độ (ms)
+    let timer = null;
+
+    function startAuto(){
+      if(timer) return;
+      timer = setInterval(()=>{
+        idx = (idx+1)%items.length;
+        update();
+      }, AUTOPLAY_MS);
+    }
+    function stopAuto(){
+      clearInterval(timer);
+      timer = null;
+    }
+    function restartAuto(){
+      stopAuto();
+      startAuto();
+    }
+
+    // Tạm dừng khi hover/focus để người dùng điều khiển
+    if(carousel){
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+      carousel.addEventListener('focusin',  stopAuto);
+      carousel.addEventListener('focusout', startAuto);
+    }
+
+    // Tạm dừng khi tab không hiển thị
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.hidden) stopAuto(); else startAuto();
+    });
+
+    // Khởi tạo
+    update();
+    startAuto();
 
     // ====== BACK TO TOP FAB ======
     const fab = document.getElementById('fabTop');
