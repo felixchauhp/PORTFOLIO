@@ -37,7 +37,7 @@ img{max-width:100%; display:block}
 .pad{ padding:20px }
 .subtle{ color:var(--muted) }
 .pill{ display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(155,218,240,.55); background:white; color:#014955; font-size:12px; margin:4px 6px 0 0 }
-.section{ padding: clamp(28px, 5vw, 56px) 0 }
+.section{ padding: clamp(28px, 5vw, 38px) 0 }
 .section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:18px; color:var(--ink) }
 h1{ font-size:clamp(34px,5.2vw,60px); line-height:1.1; margin:10px 0 }
 h2{ font-size:clamp(22px,3.2vw,30px); margin:0 0 8px }
