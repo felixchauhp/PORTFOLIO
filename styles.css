@@ -164,7 +164,7 @@ header{
 
 .contact-quick{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px }
 .contact-quick .chip{
-  display:inline-flex; align-items:center; gap:8px;
+  display:inline-flex; align-items:center; gap:6px;
   padding:10px 14px; border-radius:999px;
   border:1px solid rgba(155,218,240,.55); background:#fff;
   color:#0f1c2f; box-shadow:var(--shadow); font-weight:600;
