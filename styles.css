@@ -96,6 +96,25 @@ header{
 .name{ font-size:clamp(38px,6vw,72px); font-weight:700; margin:0; color:var(--ink) }
 .objective{ margin-top:10px; font-size:clamp(14px, 1.6vw, 15px); line-height:1.7; color:var(--ink) }
 .nickname{ margin-top:6px; color:#0d3b66; font-weight:600 }
+.name-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+
+/* Badge nút CV */
+.cv-download{
+  text-decoration:none;
+  font-weight:600;
+  color:#0d3b66;
+}
+
+.cv-download img{
+  width:18px;
+  height:18px;
+}
 /* Carousel */
 .carousel{ position:relative; border-radius:var(--radius-lg); overflow:hidden; border:1px solid rgba(155,218,240,.55) }
 .slides{ display:flex; transition: transform .5s ease-in-out }
