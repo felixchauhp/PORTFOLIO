@@ -82,6 +82,7 @@ header{
   .nav{ grid-template-columns: auto 1fr auto; }
   .menu.left, .menu.right{ display:none }
   .hamburger{ display:block; justify-self:end }
+  .logo img{ width:100%; height:fit-content; object-fit:cover;}
 }
 @media (min-width: 993px){
   #mobileMenu{ display:none !important }
@@ -190,7 +191,11 @@ footer{ border-top:1px solid rgba(155,218,240,.45); background:linear-gradient(t
 .footer-wrap{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:18px 0; color:var(--ink) }
 .footer-logo{ width:48px; height:48px; border-radius:12px; background: var(--grad); display:grid; place-items:center; box-shadow:var(--shadow) }
 .footer-logo img{ width:fit-content; height:fit-content; object-fit:cover;}
-@media (max-width:420px){ .footer-wrap{ text-align:center; padding:22px 0 } }
+@media (max-width:420px)
+{ 
+  .footer-wrap{ text-align:center; padding:22px 0 } 
+  .footer-logo img{ width:100%; height:fit-content; object-fit:cover;}
+}
 
 /* ====== BUTTONS / FAB ====== */
 .btn{ border:1px solid rgba(25,161,185,.6); border-radius:12px; padding:10px 14px; background:var(--button); color:white; font-weight:700; cursor:pointer; transition:transform .2s ease, filter .2s ease }
@@ -221,3 +226,4 @@ html{ scroll-behavior:smooth }
   .project, .project-thumb img{ transition:none }
   .btn{ transition:none }
 }
+
