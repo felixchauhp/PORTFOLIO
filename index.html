@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
+        /* === VARIABLES === */
         :root {
             --clr-primary: #8AB4F8;
             --clr-accent: #E8F0FE;
@@ -19,19 +20,21 @@
             --glass-border: rgba(255, 255, 255, 0.6);
         }
 
+        /* === RESET & BASE === */
         * {
             margin: 0; padding: 0; box-sizing: border-box;
         }
 
         body, html {
             height: 100%; width: 100%;
-            overflow: hidden; /* Prevent scrolling strictly */
+            overflow: hidden; /* STRICTLY PREVENT SCROLLING */
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--clr-bg);
             display: flex;
             flex-direction: column;
         }
 
+        /* === BACKGROUND EFFECT === */
         #canvas {
             position: fixed;
             top: 0; left: 0;
@@ -39,6 +42,7 @@
             pointer-events: none;
         }
 
+        /* === LAYOUT === */
         .maintenance-container {
             flex: 1;
             display: flex;
@@ -68,6 +72,7 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
+        /* === LOGO === */
         .logo-area {
             margin-bottom: 5px;
         }
@@ -81,22 +86,27 @@
 
         .text-accent { color: var(--clr-primary); }
 
+        /* === 3D ICON ILLUSTRATION === */
         .illustration {
             margin: 20px 0;
-            color: var(--clr-primary);
             display: flex;
             justify-content: center;
         }
 
-        .floating-svg {
-            animation: float 4s ease-in-out infinite;
+        .floating-3d-icon {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.15));
+            animation: float3D 4s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
         }
 
+        /* === TYPOGRAPHY === */
         .main-title {
             font-size: clamp(1.4rem, 4vw, 2rem);
             font-weight: 800;
@@ -118,6 +128,7 @@
             margin: 25px 0;
         }
 
+        /* === CONTACT INFO === */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -145,6 +156,7 @@
 
         .contact-item a:hover { color: var(--clr-primary); }
 
+        /* === CURRENT STATUS === */
         .current-status {
             margin-top: 25px;
             display: inline-flex;
@@ -167,6 +179,7 @@
             box-shadow: 0 0 8px var(--clr-primary);
         }
 
+        /* === FOOTER === */
         .mini-footer {
             padding: 20px;
             text-align: center;
@@ -176,19 +189,19 @@
             z-index: 10;
         }
 
-        /* Responsive */
+        /* === RESPONSIVE DESIGN === */
         @media (max-width: 600px) {
             .contact-grid { grid-template-columns: 1fr; gap: 15px; }
             .glass-card { padding: 30px 25px; }
             .current-status { flex-direction: column; text-align: center; gap: 6px; padding: 12px 20px; }
             .status-dot { margin-right: 0; }
+            .floating-3d-icon { width: 85px; height: 85px; }
         }
         
-        /* Height constraints for smaller screens (landscape mobile) */
         @media (max-height: 700px) {
             .glass-card { padding: 20px; }
             .illustration { margin: 10px 0; }
-            .illustration svg { width: 70px; height: 70px; }
+            .floating-3d-icon { width: 75px; height: 75px; }
             .divider { margin: 15px 0; }
         }
     </style>
@@ -204,13 +217,7 @@
             </div>
 
             <div class="illustration" aria-hidden="true">
-                <svg width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="floating-svg">
-                    <path d="m8.6 21 3.4-16a1.06 1.06 0 0 1 2 0l3.4 16"/>
-                    <path d="m4.6 21 14.8 0"/>
-                    <path d="m9.6 15 4.8 0"/>
-                    <path d="m10.7 10 2.6 0"/>
-                    <path d="M4 21l-1 0a1 1 0 0 1 -1-1v-1a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-1"/>
-                </svg>
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Construction.png" alt="Maintenance" class="floating-3d-icon">
             </div>
 
             <h1 class="main-title">Scheduled Maintenance</h1>
@@ -240,7 +247,7 @@
     </main>
 
     <footer class="mini-footer">
-        <p>&copy; 2026 Felix Phuc Nguyen. All rights reserved.</p>
+        <p>&copy; 2026 felixchauhp.io.vn. All rights reserved.</p>
     </footer>
 
     <script>
