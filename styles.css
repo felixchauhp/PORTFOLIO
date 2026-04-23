@@ -37,7 +37,7 @@
     --shadow-glow: 0 0 20px rgba(138, 180, 248, 0.4);
     
     /* -- Bố cục (Layout & Spacing) -- */
-    --nav-height: 85px;
+    --nav-height: 72px;
     --section-padding: clamp(80px, 10vw, 120px) 0;
     --container-max: 1200px;
     
@@ -326,10 +326,10 @@ h1, h2, h3, h4, h5, h6 {
    8. PHẦN MỞ ĐẦU (HERO SECTION)
    -------------------------------------------------------------------------- */
 .hero-section {
-    min-height: calc(100vh - var(--nav-height));
+    min-height: calc(100svh - var(--nav-height));
     display: flex; 
     align-items: center;
-    padding: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+    padding: clamp(0.25rem, 1vw, 0.75rem) 0;
     position: relative;
     overflow: hidden;
 }
@@ -396,7 +396,13 @@ h1, h2, h3, h4, h5, h6 {
 .lead-text { font-size: clamp(1.05rem, 1.2vw, 1.15rem); color: var(--clr-text-muted); max-width: 580px; }
 
 .image-frame { padding: 15px; }
-.hero-img { border-radius: var(--radius-lg); width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.hero-img {
+    border-radius: var(--radius-lg);
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center 80%;
+}
 
 .glass-effect {
     background: rgba(255, 255, 255, 0.9);
@@ -576,7 +582,7 @@ h1, h2, h3, h4, h5, h6 {
         --nav-height: 65px;
     }
     .container { padding: 0 clamp(15px, 4vw, 20px); }
-    .hero-section { padding: clamp(1rem, 3vw, 1.5rem) 0 0; }
+    .hero-section { min-height: calc(100svh - var(--nav-height)); padding: 0.25rem 0 0.75rem; }
     .main-title { font-size: clamp(2rem, 6vw, 2.5rem); }
     .lead-text { font-size: clamp(0.95rem, 1.1vw, 1rem); }
     .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 0.95rem; }
